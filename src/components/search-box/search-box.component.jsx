@@ -3,6 +3,7 @@ import './search-box.styles.css';
 
 class SearchBox extends Component {
   render() {
+    console.log("SearchBox");
     return (
       <div>
       <input

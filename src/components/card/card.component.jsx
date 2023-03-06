@@ -3,6 +3,7 @@ import "./card.styles.css"
 
 class Card extends Component {
   render() {
+    console.log("Card");
     const { id, name, email } = this.props.monster;
     return (
       <div className="card-container" key={id}>
