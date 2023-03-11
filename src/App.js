@@ -7,22 +7,30 @@ const App = () => {
 
   const [searchField, setSearchField] = useState("");
   const [monsters, setMonsters] = useState([]);
-  console.log(searchField);
+  const [filteredMonsters, setFilteresMonsters] = useState(monsters);
+
+  useEffect(() => {
+    fetch("Https://jsonplaceholder.typicode.com/users")
+    .then((response) => response.json())
+    .then((users) => setMonsters(users));
+  }, []);
+
+  useEffect(() => {
+    const newFilteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLocaleLowerCase().includes(searchField)
+    });
+    setFilteresMonsters(newFilteredMonsters);
+  }, [monsters, searchField]);
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setSearchField(searchFieldString);
-  }
-
-  const filteredMonsters = monsters.filter((monster) => {
-    return monster.name.toLocaleLowerCase().includes(searchField)
-  });
-
+  };
 
   return (
     <div className="App">
       <h1 className="app-title">Monsters Redux</h1>
-      <SearchBox onChangeHandler={onSearchChange} placeholder= "Search monsters" className="monsters-search-box"/>
+      <SearchBox onChangeHandler={onSearchChange} placeholder="Search monsters" className="monsters-search-box"/>
       <CardList monsters={filteredMonsters}/>
     </div>
   )
